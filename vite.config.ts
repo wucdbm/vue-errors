@@ -1,41 +1,23 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
-import { name } from './package.json'
 
 export default defineConfig({
     plugins: [
         dts({
             rollupTypes: true,
-            include: ['lib'],
-            exclude: ['lib/cli'],
+            include: ['src'],
         }),
     ],
     build: {
         minify: false,
         copyPublicDir: false,
         lib: {
-            entry: resolve(__dirname, 'lib/index.ts'),
+            entry: resolve(__dirname, 'src/index.ts'),
             formats: ['es'],
         },
         rollupOptions: {
-            external: [
-                // Node Builtins
-                'node:path',
-                'node:http',
-                'node:fs',
-                // Libs
-                '@unhead/ssr',
-                '@unhead/vue',
-                '@unhead/head',
-                'chalk',
-                'connect',
-                'node-fetch',
-                'vite',
-                'vue',
-                '@vue/server-renderer',
-                'vue-router',
-            ],
+            external: ['vue', 'axios'],
             output: {
                 assetFileNames: 'assets/[name][extname]',
                 entryFileNames: '[name].js',
@@ -44,10 +26,22 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            '@': resolve('lib/'),
+            '@': resolve('src/'),
         },
     },
     define: {
-        PLUGIN_NAME: JSON.stringify(name),
+        // https://vitest.dev/guide/in-source.html
+        // For the production build, you will need to set the define options in your config file,
+        // letting the bundler do the dead code elimination.
+        'import.meta.vitest': 'undefined',
+    },
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    test: {
+        deps: {
+            inline: ['lodash-es'],
+        },
+        includeSource: ['src/**/*.{js,ts}'],
+        include: ['./src/**/*.spec.ts'],
     },
 })

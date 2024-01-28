@@ -1,14 +1,11 @@
 {
-    "name": "wucdbm-vite-acme",
+    "name": "wucdbm-vue-errors",
     "private": false,
-    "description": "An ACME template for building Vite-built libraries with CLI tools",
+    "description": "A Vue.js bindings library for wucdbm/filter-bundle PHP toolbox",
     "version": "1.0.0",
     "type": "module",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
-    "bin": {
-        "wucdbm-vite-acme": "dist/cli/index.js"
-    },
     "files": [
         "dist",
         "LICENSE",
@@ -20,27 +17,23 @@
     "scripts": {
         "dev": "vite",
         "preview": "vite preview",
-        "build": "yarn build:lib && yarn build:cli",
-        "build:lib": "tsc --p ./tsconfig-build.json && vite build",
-        "build:cli": "tsc --p ./tsconfig-build.json && vite build --config vite-cli.config.ts --ssr",
+        "build": "tsc --p ./tsconfig-build.json && vite build",
         "prepublishOnly": "npm run build",
         "lint": "eslint .",
         "format": "prettier --write .",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "test": "vitest --reporter verbose"
     },
     "peerDependencies": {
-        "@rollup/plugin-replace": "^5.0.5",
-        "vite": "^5.0.12"
+        "vue": "^3.4.15",
+        "axios": "^1.6.7"
     },
     "peerDependenciesMeta": {
-        "@vueuse/head": {
-            "optional": true
-        },
         "vue": {
-            "optional": true
+            "optional": false
         },
-        "vue-router": {
-            "optional": true
+        "axios": {
+            "optional": false
         }
     },
     "devDependencies": {
@@ -58,12 +51,17 @@
         "prettier": "^3.2.4",
         "typescript": "^5.2.2",
         "vite": "^5.0.12",
-        "vite-plugin-dts": "^3.7.2"
+        "vite-plugin-dts": "^3.7.2",
+        "vitest": "^1.2.2"
     },
     "lint-staged": {
         "**/*.{js,ts,tsx}": [
             "eslint --fix"
         ],
         "**/*": "prettier --write --ignore-unknown"
+    },
+    "dependencies": {
+        "vue": "^3.4.15",
+        "axios": "^1.6.7"
     }
 }
