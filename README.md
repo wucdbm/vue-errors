@@ -15,6 +15,8 @@ Implement your own composables if using GraphQL where your state and errors each
             type="text"
             v-model="model.description"
         />
+        <!--        In your own components, add an "error" prop to the inputs-->
+        <!--        And bind it like <MyInput :error="errors.last('fieldName')" />-->
         <p v-if="errors.has('description')">
             {{ errors.last('description') }}
         </p>
