@@ -17,7 +17,7 @@
     "scripts": {
         "dev": "vite",
         "preview": "vite preview",
-        "build": "tsc --p ./tsconfig-build.json && vite build",
+        "build": "yarn vitest --run && tsc --p ./tsconfig-build.json && vite build",
         "prepublishOnly": "npm run build",
         "lint": "eslint .",
         "format": "prettier --write .",
